@@ -6,6 +6,7 @@ using UnityEngine;
 public class CharacterMoveScript : MonoBehaviour
 {
   CharacterController controller;
+  Animator anim;
   [SerializeField] float moveSpeed, rotateSpeed;
 
   const float GRAVITY = 9.8f;
@@ -14,6 +15,7 @@ public class CharacterMoveScript : MonoBehaviour
   void Start()
   {
     controller = GetComponent<CharacterController>();
+    anim = GetComponent<Animator>();
   }
 
   // Update is called once per frame
@@ -26,6 +28,10 @@ public class CharacterMoveScript : MonoBehaviour
     transform.Rotate(transform.up * Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime);
     //前方向ベクトルへ入力に応じてmoveSpeedで移動
     move = transform.forward * Input.GetAxis("Vertical") * moveSpeed;
+    if (move.magnitude != 0)
+      anim.SetBool("Walk", true);
+    else
+      anim.SetBool("Walk", false);
     //接地していなかったら落ちる
     if (!controller.isGrounded)
       move.y -= GRAVITY;
