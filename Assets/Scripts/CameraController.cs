@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+  [SerializeField] Transform startPosition;
 
+  void Start()
+  {
+    Camera.main.transform.position = startPosition.position;
+  }
   //カメラは常にプレイヤーの方向を向く（現段階）
   void Update()
   {
@@ -15,5 +20,10 @@ public class CameraController : MonoBehaviour
   private void OnTriggerEnter(Collider other)
   {
     Camera.main.transform.position = other.transform.parent.transform.position;
+  }
+
+  public void SetCameraPosition(Transform t)
+  {
+    Camera.main.transform.position = t.position;
   }
 }
