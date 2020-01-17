@@ -90,3 +90,18 @@ public class GenerateStage : MonoBehaviour
     transform.rotation = q;
   }
 }
+
+[CustomEditor(typeof(GenerateStage))]
+public class GenerateStageEditor : Editor
+{
+  public override void OnInspectorGUI()
+  {
+    base.OnInspectorGUI();
+
+    GenerateStage generateStage = target as GenerateStage;
+    if (GUILayout.Button("Generate"))
+    {
+      generateStage.Generate();
+    }
+  }
+}
