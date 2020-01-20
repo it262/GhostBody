@@ -74,8 +74,10 @@ public class MeshCombiner : MonoBehaviour
       newObject.transform.parent = generatedObject.transform;
 
       Debug.Log(Application.loadedLevelName);
+      /*
       System.IO.Directory.CreateDirectory("Assets/" + Application.loadedLevelName + "/" + name);
       AssetDatabase.CreateAsset(mesh, "Assets/" + Application.loadedLevelName + "/" + name + "/" + dic.Key.name + ".asset");
+      */
     }
   }
 
