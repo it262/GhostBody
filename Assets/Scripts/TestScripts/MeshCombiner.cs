@@ -19,6 +19,7 @@ public class MeshCombiner : MonoBehaviour
   void Init()
   {
     MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>(true);
+    Collider[] colliders = GetComponentsInChildren<Collider>(true);
     Dictionary<Material, List<CombineInstance>> combineMeshInstanceDictionary = new Dictionary<Material, List<CombineInstance>>();
 
     foreach (var mesh in meshFilters)
@@ -39,6 +40,8 @@ public class MeshCombiner : MonoBehaviour
       cmesh.mesh = ((MeshFilter)mesh).sharedMesh;
       instance.Add(cmesh);
     }
+
+    
 
     gameObject.SetActive(false);
     gameObject.tag = "EditorOnly";
@@ -78,6 +81,17 @@ public class MeshCombiner : MonoBehaviour
       System.IO.Directory.CreateDirectory("Assets/" + Application.loadedLevelName + "/" + name);
       AssetDatabase.CreateAsset(mesh, "Assets/" + Application.loadedLevelName + "/" + name + "/" + dic.Key.name + ".asset");
       */
+    }
+
+    var collidersObject = new GameObject("colliders");
+    collidersObject.transform.parent = generatedObject.transform;
+
+    foreach (var collider in colliders)
+    {
+      var c = collider.gameObject;
+      var g = Instantiate(c, c.transform.position, c.transform.rotation);
+      g.transform.localScale = c.transform.lossyScale;
+      g.transform.parent = collidersObject.transform;
     }
   }
 
